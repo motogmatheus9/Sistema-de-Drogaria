@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Clientes - Drogaria MaLu{% endblock %}
+
+{% block content %}
+<h1>👥 Gestão de Clientes</h1>
+
+<!-- Formulário Dinâmico (Cadastrar / Editar) -->
+<div class="card" style="margin-top: 20px; max-width: 600px;">
+    <h3 style="margin-bottom: 15px; color: #211224;">
+        {% if cliente %} ✏️ Editar Cliente #{{ cliente.id_cliente }} {% else %} ➕ Cadastrar Novo Cliente {% endif %}
+    </h3>
+    
+    <form action="{% if cliente %}/clientes/editar/{{ cliente.id_cliente }}{% else %}/clientes{% endif %}" method="POST">
+        <div style="margin-bottom: 12px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Nome Completo:</label>
+            <input type="text" name="nome" value="{{ cliente.nome if cliente else '' }}" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CCC;">
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">CPF:</label>
+            <input type="text" name="cpf" value="{{ cliente.cpf if cliente else '' }}" placeholder="000.000.000-00" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CCC;">
+        </div>
+
+        <div style="margin-bottom: 12px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Telefone / WhatsApp:</label>
+            <input type="text" name="telefone" value="{{ cliente.telefone if cliente else '' }}" placeholder="(00) 00000-0000" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CCC;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">E-mail:</label>
+            <input type="email" name="email" value="{{ cliente.email if cliente else '' }}" placeholder="cliente@email.com" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CCC;">
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" style="background-color: #880e4f; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; flex: 1; font-size: 15px;">
+                {% if cliente %} Salvar Alterações {% else %} Salvar Cliente {% endif %}
+            </button>
+            
+            {% if cliente %}
+                <a href="/clientes" style="background-color: #6c757d; color: white; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; text-align: center;">Cancelar</a>
+            {% endif %}
+        </div>
+    </form>
+</div>
+
+<!-- Tabela de Clientes -->
+<div class="card" style="margin-top: 30px;">
+    <h3 style="margin-bottom: 15px; color: #211224;">Clientes Cadastrados</h3>
+    
+    <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <thead>
+            <tr style="border-bottom: 2px solid #eee; color: #880e4f;">
+                <th style="padding: 10px;">ID</th>
+                <th style="padding: 10px;">Nome</th>
+                <th style="padding: 10px;">CPF</th>
+                <th style="padding: 10px;">Telefone</th>
+                <th style="padding: 10px;">E-mail</th>
+                <th style="padding: 10px; text-align: center;">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for c in clientes %}
+            <tr style="border-bottom: 1px solid #f0f0f0;">
+                <td style="padding: 10px;">#{{ c.id_cliente }}</td>
+                <td style="padding: 10px; font-weight: bold;">{{ c.nome }}</td>
+                <td style="padding: 10px;">{{ c.cpf or '-' }}</td>
+                <td style="padding: 10px;">{{ c.telefone or '-' }}</td>
+                <td style="padding: 10px;">{{ c.email or '-' }}</td>
+                <td style="padding: 10px; text-align: center;">
+                    <a href="/clientes/editar/{{ c.id_cliente }}" style="background-color: #ffc107; color: #212529; padding: 6px 12px; border-radius: 5px; text-decoration: none; font-weight: bold; font-size: 12px;">✏️ Editar</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="6" style="padding: 15px; text-align: center; color: #777;">Nenhum cliente cadastrado ainda.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

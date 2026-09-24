@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Saída de Estoque - Drogaria MaLu{% endblock %}
+
+{% block content %}
+    <a href="/estoque" style="color: #A62B5B; text-decoration: none; font-weight: bold;">&larr; Voltar ao Estoque</a>
+    <h1 style="margin-top: 10px;">📤 Registrar Saída de Estoque</h1>
+
+    <div class="card" style="width: 100%; max-width: 600px; padding: 25px; margin-top: 15px;">
+        <form action="/estoque/saida" method="POST">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Lote / Produto *</label>
+                <select name="id_lote" required style="width: 100%; padding: 10px; border: 1px solid #CCC; border-radius: 6px;">
+                    <option value="">Selecione o lote...</option>
+                    {% for lote in lotes %}
+                        <option value="{{ lote.id_lote }}">
+                            {{ lote.produto }} - Lote: {{ lote.numero_lote }} (Disp: {{ lote.quantidade_atual }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">Quantidade a Remover *</label>
+                <input type="number" name="quantidade" required min="1" placeholder="Ex: 1" style="width: 100%; padding: 10px; border: 1px solid #CCC; border-radius: 6px; box-sizing: border-box;">
+            </div>
+
+            <button type="submit" style="background-color: #DC3545; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;">
+                Confirmar Saída
+            </button>
+        </form>
+    </div>
+{% endblock %}

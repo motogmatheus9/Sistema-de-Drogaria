@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Drogaria MaLu{% endblock %}
+
+{% block content %}
+<h1>Dashboard</h1>
+
+<div style="display: flex; flex-direction: column; gap: 15px; margin-top: 20px;">
+
+    <!-- Card Medicamentos -->
+    <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+        <div>
+            <h3 style="margin: 0; color: #211224;">💊 Medicamentos</h3>
+            <p style="font-size: 24px; font-weight: bold; margin: 5px 0 0 0; color: #880e4f;">{{ total_medicamentos }}</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <a href="/medicamentos" style="background-color: #6c757d; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">Ver Lista</a>
+            <a href="/medicamentos/novo" style="background-color: #880e4f; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">+ Novo Produto</a>
+        </div>
+    </div>
+
+    <!-- Card Clientes -->
+    <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+        <div>
+            <h3 style="margin: 0; color: #211224;">👥 Clientes</h3>
+            <p style="font-size: 24px; font-weight: bold; margin: 5px 0 0 0; color: #880e4f;">{{ total_clientes }}</p>
+        </div>
+        <div>
+            <a href="/clientes" style="background-color: #880e4f; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">+ Cadastrar / Listar Clientes</a>
+        </div>
+    </div>
+
+    <!-- Card Vendas Hoje -->
+    <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+        <div>
+            <h3 style="margin: 0; color: #211224;">🛒 Vendas Hoje</h3>
+            <p style="font-size: 24px; font-weight: bold; margin: 5px 0 0 0; color: #28a745;">R$ {{ "%.2f"|format(vendas_hoje) }}</p>
+        </div>
+        <div>
+            <a href="/vendas" style="background-color: #28a745; color: white; padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">⚡ Nova Venda (Caixa)</a>
+        </div>
+    </div>
+
+    <!-- Card Estoque -->
+    <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+        <div>
+            <h3 style="margin: 0; color: #211224;">📦 Estoque Total</h3>
+            <p style="font-size: 24px; font-weight: bold; margin: 5px 0 0 0; color: #007bff;">{{ total_estoque }} <span style="font-size: 14px;">unid.</span></p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <a href="/estoque/entrada" style="background-color: #007bff; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">+ Dar Entrada Lote</a>
+            <a href="/estoque/saida" style="background-color: #dc3545; color: white; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 14px;">- Dar Saída Lote</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

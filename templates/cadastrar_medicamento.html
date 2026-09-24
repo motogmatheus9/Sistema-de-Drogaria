@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Medicamento - Sistema de Farmácia</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f6f9; }
+        h1 { color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .full-width { grid-column: span 2; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .checkbox-group { display: flex; gap: 20px; margin-top: 10px; }
+        .checkbox-group label { font-weight: normal; cursor: pointer; }
+        button { background-color: #007bff; color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; font-size: 16px; width: 100%; margin-top: 15px; }
+        button:hover { background-color: #0069d9; }
+        .btn-voltar { display: inline-block; margin-bottom: 15px; color: #007bff; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/medicamentos" class="btn-voltar">&larr; Voltar para Medicamentos</a>
+        <h1>Cadastrar Novo Medicamento</h1>
+
+        <form action="/medicamentos/novo" method="POST">
+            <div class="form-grid">
+                
+                <div class="form-group full-width">
+                    <label for="nome">Nome do Medicamento / Produto *</label>
+                    <input type="text" id="nome" name="nome" placeholder="Ex: Dipirona Monoidratada 500mg" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_categoria">Categoria</label>
+                    <select id="id_categoria" name="id_categoria">
+                        <option value="">Selecione uma categoria...</option>
+                        {% for cat in categorias %}
+                            <option value="{{ cat.id_categoria }}">{{ cat.nome }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="fabricante">Fabricante / Marca</label>
+                    <input type="text" id="fabricante" name="fabricante" placeholder="Ex: Medley, EMS, Eurofarma">
+                </div>
+
+                <div class="form-group">
+                    <label for="principio_ativo">Princípio Ativo</label>
+                    <input type="text" id="principio_ativo" name="principio_ativo" placeholder="Ex: Dipirona Sódica">
+                </div>
+
+                <div class="form-group">
+                    <label for="codigo_barras">Código de Barras (EAN)</label>
+                    <input type="text" id="codigo_barras" name="codigo_barras" placeholder="7891234567890">
+                </div>
+
+                <div class="form-group">
+                    <label for="preco_custo">Preço de Custo (R$)</label>
+                    <input type="number" step="0.01" id="preco_custo" name="preco_custo" placeholder="0.00">
+                </div>
+
+                <div class="form-group">
+                    <label for="preco_venda">Preço de Venda (R$) *</label>
+                    <input type="number" step="0.01" id="preco_venda" name="preco_venda" placeholder="0.00" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="unidade">Unidade de Medida</label>
+                    <select id="unidade" name="unidade">
+                        <option value="UN">Unidade (UN)</option>
+                        <option value="CX">Caixa (CX)</option>
+                        <option value="FR">Frasco (FR)</option>
+                        <option value="AMP">Ampola (AMP)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="estoque_minimo">Estoque Mínimo (Alerta)</label>
+                    <input type="number" id="estoque_minimo" name="estoque_minimo" value="5">
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="descricao">Descrição / Observações</label>
+                    <textarea id="descricao" name="descricao" rows="2" placeholder="Informações adicionais do produto"></textarea>
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Classificação Especial:</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="necessita_receita" value="1">
+                            Exige Receita Médica
+                        </label>
+                        <label>
+                            <input type="checkbox" name="controlado" value="1">
+                            Medicamento Controlado (Portaria 344)
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit">Cadastrar Medicamento</button>
+        </form>
+    </div>
+</body>
+</html>

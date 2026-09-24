@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>✏️ Editar Cliente</h1>
+
+    <div class="card" style="max-width: 600px;">
+        {% if cliente %}
+            <form action="/clientes/atualizar/{{ cliente.id_cliente }}" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Nome:</label>
+                    <input type="text" name="nome" value="{{ cliente.nome }}" required style="width: 100%; padding: 10px; border: 1px solid #F3E0E7; border-radius: 8px;">
+                </div>
+
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">CPF:</label>
+                    <input type="text" name="cpf" value="{{ cliente.cpf or '' }}" style="width: 100%; padding: 10px; border: 1px solid #F3E0E7; border-radius: 8px;">
+                </div>
+
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">Telefone:</label>
+                    <input type="text" name="telefone" value="{{ cliente.telefone or '' }}" style="width: 100%; padding: 10px; border: 1px solid #F3E0E7; border-radius: 8px;">
+                </div>
+
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">E-mail:</label>
+                    <input type="email" name="email" value="{{ cliente.email or '' }}" style="width: 100%; padding: 10px; border: 1px solid #F3E0E7; border-radius: 8px;">
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <button type="submit" style="background-color: #A62B5B; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer;">
+                        Salvar Alterações
+                    </button>
+                    <a href="/clientes" style="background-color: #ccc; color: #333; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                        Cancelar
+                    </a>
+                </div>
+            </form>
+        {% else %}
+            <p style="color: red;">Cliente não encontrado.</p>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>✏️ Editar Medicamento</h2>
+    <a href="{{ url_for('medicamentos') }}" class="btn btn-secondary">Voltar</a>
+</div>
+
+<div class="card shadow-sm p-4">
+    <form method="POST" action="{{ url_for('editar_medicamento', id_produto=produto.id_produto) }}">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome do Produto</label>
+            <input type="text" class="form-control" id="nome" name="nome" value="{{ produto.nome }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="id_categoria" class="form-label">Categoria</label>
+            <select class="form-select" id="id_categoria" name="id_categoria">
+                <option value="">Selecione uma categoria</option>
+                {% for c in categorias %}
+                    <option value="{{ c.id_categoria }}" {% if c.id_categoria == produto.id_categoria %}selected{% endif %}>
+                        {{ c.nome }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="preco_custo" class="form-label">Preço de Custo (R$)</label>
+                <input type="number" step="0.01" class="form-control" id="preco_custo" name="preco_custo" value="{{ produto.preco_custo }}">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="preco_venda" class="form-label">Preço de Venda (R$)</label>
+                <input type="number" step="0.01" class="form-control" id="preco_venda" name="preco_venda" value="{{ produto.preco_venda }}" required>
+            </div>
+        </div>
+
+        <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="ativo" name="ativo" {% if produto.ativo %}checked{% endif %}>
+            <label class="form-check-label" for="ativo">Produto Ativo</label>
+        </div>
+
+        <button type="submit" class="btn btn-success">Salvar Alterações</button>
+    </form>
+</div>
+{% endblock %}

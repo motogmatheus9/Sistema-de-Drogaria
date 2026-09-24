@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}Vendas - Drogaria MaLu{% endblock %}
+
+{% block content %}
+<h1>🛒 Registrar Venda</h1>
+
+<div class="card" style="max-width: 600px; margin-top: 20px;">
+    <h3 style="margin-bottom: 20px;">Frente de Caixa</h3>
+    
+    <form action="/vendas" method="POST">
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Selecione o Cliente (Opcional):</label>
+            <select name="id_cliente" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CCC; background-color: #FFF;">
+                <option value="">-- Cliente Avulso --</option>
+                {% if clientes %}
+                    {% for cliente in clientes %}
+                        <option value="{{ cliente.id_cliente }}">{{ cliente.nome }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Produto e Lote:</label>
+            <select name="id_lote" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CCC; background-color: #FFF;">
+                <option value="">-- Selecione o produto disponível em estoque --</option>
+                {% if produtos %}
+                    {% for item in produtos %}
+                        <option value="{{ item.id_lote }}">
+                            {{ item.produto }} (Lote: {{ item.numero_lote }} - Est: {{ item.quantidade_atual }} UN - R$ {{ "%.2f"|format(item.preco_venda) }})
+                        </option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Quantidade:</label>
+            <input type="number" name="quantidade" min="1" value="1" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CCC;">
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <label style="display: block; font-weight: bold; margin-bottom: 5px;">Forma de Pagamento:</label>
+            <select name="forma_pagamento" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #CCC; background-color: #FFF;">
+                <option value="DINHEIRO">Dinheiro</option>
+                <option value="CARTAO_DEBITO">Cartão de Débito</option>
+                <option value="CARTAO_CREDITO">Cartão de Crédito</option>
+                <option value="PIX">PIX</option>
+            </select>
+        </div>
+
+        <button type="submit" style="background-color: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; font-size: 16px;">
+            Confirmar Venda
+        </button>
+    </form>
+</div>
+{% endblock %}

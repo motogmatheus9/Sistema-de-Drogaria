@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Drogaria MaLu</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #fdf0f5; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 350px; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #880e4f; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .alert { color: red; font-size: 14px; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2 style="color: #880e4f;">Drogaria MaLu</h2>
+        <p style="color: #666; font-size: 14px;">Acesso Restrito</p>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert">{{ messages[0] }}</div>
+          {% endif %}
+        {% endwith %}
+
+        <form action="/login" method="POST">
+            <input type="text" name="usuario" placeholder="Usuário" required>
+            <input type="password" name="senha" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>

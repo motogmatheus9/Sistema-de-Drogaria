@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block title %}Relatórios - Drogaria MaLu{% endblock %}
+
+{% block content %}
+<h1>📊 Relatório Geral e Movimentação</h1>
+
+<!-- Cards de Resumo no Topo -->
+<div style="display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap;">
+    <div class="card" style="flex: 1; min-width: 180px; border-left: 5px solid #28a745;">
+        <span style="font-size: 12px; font-weight: bold; color: #666;">TOTAL DE ENTRADAS</span>
+        <h2 style="margin: 10px 0 0 0; color: #28a745;">{{ total_entradas }} <small style="font-size: 14px;">unid.</small></h2>
+    </div>
+
+    <div class="card" style="flex: 1; min-width: 180px; border-left: 5px solid #dc3545;">
+        <span style="font-size: 12px; font-weight: bold; color: #666;">TOTAL DE SAÍDAS</span>
+        <h2 style="margin: 10px 0 0 0; color: #dc3545;">{{ total_saidas }} <small style="font-size: 14px;">unid.</small></h2>
+    </div>
+
+    <div class="card" style="flex: 1; min-width: 180px; border-left: 5px solid #007bff;">
+        <span style="font-size: 12px; font-weight: bold; color: #666;">SALDO EM ESTOQUE</span>
+        <h2 style="margin: 10px 0 0 0; color: #007bff;">{{ saldo_estoque }} <small style="font-size: 14px;">unid.</small></h2>
+    </div>
+
+    <div class="card" style="flex: 1; min-width: 180px; border-left: 5px solid #ffc107;">
+        <span style="font-size: 12px; font-weight: bold; color: #666;">VENDAS HOJE (CAIXA)</span>
+        <h2 style="margin: 10px 0 0 0; color: #28a745;">R$ {{ "%.2f"|format(vendas_hoje_total) }}</h2>
+    </div>
+</div>
+
+<!-- Tabela Detalhamento por Lote -->
+<div class="card" style="margin-top: 25px;">
+    <h3>Detalhamento por Lote</h3>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+            <tr style="border-bottom: 2px solid #DDD; text-align: left;">
+                <th style="padding: 10px;">Produto</th>
+                <th style="padding: 10px;">Nº Lote</th>
+                <th style="padding: 10px;">Entradas</th>
+                <th style="padding: 10px;">Saídas</th>
+                <th style="padding: 10px;">Saldo Atual</th>
+                <th style="padding: 10px;">Validade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if lotes %}
+                {% for item in lotes %}
+                <tr style="border-bottom: 1px solid #EEE;">
+                    <td style="padding: 10px;"><strong>{{ item.produto }}</strong></td>
+                    <td style="padding: 10px;">{{ item.numero_lote }}</td>
+                    <td style="padding: 10px; color: #28a745;">{{ item.entradas }}</td>
+                    <td style="padding: 10px; color: #dc3545;">{{ item.saidas }}</td>
+                    <td style="padding: 10px; font-weight: bold;">{{ item.saldo_atual }}</td>
+                    <td style="padding: 10px;">{{ item.data_validade }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" style="padding: 20px; text-align: center; color: #888;">Nenhum lote registrado no banco.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Tabela Histórico das Vendas -->
+<div class="card" style="margin-top: 25px;">
+    <h3>Histórico das Vendas Realizadas</h3>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+        <thead>
+            <tr style="border-bottom: 2px solid #DDD; text-align: left;">
+                <th style="padding: 10px;">ID</th>
+                <th style="padding: 10px;">Data / Hora</th>
+                <th style="padding: 10px;">Cliente</th>
+                <th style="padding: 10px;">Produto</th>
+                <th style="padding: 10px;">Qtd</th>
+                <th style="padding: 10px;">Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if vendas %}
+                {% for v in vendas %}
+                <tr style="border-bottom: 1px solid #EEE;">
+                    <td style="padding: 10px;">#{{ v.id_venda }}</td>
+                    <td style="padding: 10px;">{{ v.data_venda }}</td>
+                    <td style="padding: 10px;">{{ v.cliente }}</td>
+                    <td style="padding: 10px;">{{ v.produto if v.produto else '-' }}</td>
+                    <td style="padding: 10px;">{{ v.qtd if v.qtd else '1' }}</td>
+                    <td style="padding: 10px; font-weight: bold; color: #28a745;">R$ {{ "%.2f"|format(v.total) }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6" style="padding: 20px; text-align: center; color: #888;">Nenhuma venda realizada até o momento.</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
