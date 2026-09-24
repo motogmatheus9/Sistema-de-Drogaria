@@ -25,7 +25,7 @@
             <img src="{{ url_for('static', filename='fundo_novo.png') }}" alt="Logo">
         </div>
         <div class="menu">
-            <a href="{{ url_for('dashboard') }}" class="{% if request.path == '/' %}active{% endif %}"><span>🏠</span> Dashboard</a>
+            <a href="{{ url_for('home') }}" class="{% if request.path == '/' %}active{% endif %}"><span>🏠</span> Dashboard</a>
             <a href="{{ url_for('medicamentos') }}" class="{% if 'medicamento' in request.path %}active{% endif %}"><span>💊</span> Medicamentos</a>
             <a href="{{ url_for('categorias') }}" class="{% if 'categoria' in request.path %}active{% endif %}"><span>🏷️</span> Categorias</a>
             <a href="{{ url_for('clientes') }}" class="{% if 'cliente' in request.path %}active{% endif %}"><span>👥</span> Clientes</a>
