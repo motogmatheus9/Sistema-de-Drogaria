@@ -21,22 +21,16 @@
 </head>
 <body>
     <div class="sidebar">
-        <div class="logo">
-            <img src="{{ url_for('static', filename='fundo_novo.png') }}" alt="Logo">
-        </div>
-        <div class="menu">
-            <a href="{{ url_for('home') }}" class="{% if request.path == '/' %}active{% endif %}"><span>🏠</span> Dashboard</a>
-            <a href="{{ url_for('medicamentos') }}" class="{% if 'medicamento' in request.path %}active{% endif %}"><span>💊</span> Medicamentos</a>
-            <a href="{{ url_for('categorias') }}" class="{% if 'categoria' in request.path %}active{% endif %}"><span>🏷️</span> Categorias</a>
-            <a href="{{ url_for('clientes') }}" class="{% if 'cliente' in request.path %}active{% endif %}"><span>👥</span> Clientes</a>
-            <a href="{{ url_for('vendas') }}" class="{% if 'venda' in request.path %}active{% endif %}"><span>🛒</span> Vendas</a>
-            <a href="{{ url_for('estoque') }}" class="{% if request.path == '/estoque' %}active{% endif %}"><span>📦</span> Saldo Estoque</a>
-            <a href="{{ url_for('entrada_estoque') }}" class="{% if 'entrada' in request.path %}active{% endif %}"><span>📥</span> Entrada Lote</a>
-            <a href="{{ url_for('saida_estoque') }}" class="{% if 'saida' in request.path %}active{% endif %}"><span>📤</span> Saída Lote</a>
-            <a href="{{ url_for('relatorios') }}" class="{% if 'relatorio' in request.path %}active{% endif %}"><span>📊</span> Relatórios</a>
-            <a href="{{ url_for('dashboard') }}"><span>🚪</span> Sair</a>
-        </div>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='fundo_novo.png') }}" alt="Logo">
     </div>
+    <div class="menu">
+        <a href="{{ url_for('home') }}" class="{% if request.path == '/' %}active{% endif %}"><span>Dashboard</span></a>
+        <a href="#" class="{% if 'medicamento' in request.path %}active{% endif %}"><span>Medicamentos</span></a>
+        <a href="#" class="{% if 'categoria' in request.path %}active{% endif %}"><span>Categorias</span></a>
+        <a href="{{ url_for('listar_clientes') }}" class="{% if 'cliente' in request.path %}active{% endif %}"><span>Clientes</span></a>
+    </div>
+</div>
     <div class="content">
         {% block content %}{% endblock %}
     </div>
